@@ -25,6 +25,7 @@ public:
 	int ID;
 	glm::mat4 transMatrix;
 	glm::vec3 position;
+	int triangleNumber;
     unsigned int *indices;
 	float *vertices;
 	unsigned int shaderID;

@@ -1,3 +1,2 @@
-﻿  Main.cpp
-C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Main.cpp(175,25): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+﻿  Object.cpp
   OpenGLSimpleGame.vcxproj -> C:\Users\emont\source\repos\OpenGLSimpleGame\x64\Debug\OpenGLSimpleGame.exe

@@ -9,6 +9,7 @@ Object::Object(int id, unsigned int shaderId, float srcvertices[], int verticesS
 	vertices = new float[verticesSize];
 	std::memcpy(vertices, srcvertices, verticesSize * sizeof(float));
 	indices = new unsigned int[indicesSize];
+	triangleNumber = indicesSize ;
 	std::memcpy(indices, srcindices, indicesSize * sizeof(unsigned int));
 	position = glm::vec3();
 	//We create our data buffers
@@ -54,14 +55,16 @@ void Object::Draw()
 	glBindVertexArray(VAO);
 	unsigned int transformLoc = glGetUniformLocation(shaderID, "transform");
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transMatrix));
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, triangleNumber, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	//transMatrix = glm::mat4(1.0f);
 }
 
 void Object::Translate(glm::vec3 direction)
 {
-	transMatrix = glm::translate(transMatrix, direction);
+	glm::mat4 transMatrix2 = glm::mat4(1.0f);
+	transMatrix2 = glm::translate(transMatrix2, direction);
+	transMatrix = transMatrix2 * transMatrix;
 }
 
 void Object::Rotate(float angle, glm::vec3 axis)
