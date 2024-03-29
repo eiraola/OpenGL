@@ -1,7 +1,10 @@
 #include "Object.h"
 
 enum EDirection { Forward, Backward, Left, Right };
-Object::Object(int id, unsigned int shaderId, float srcvertices[], int verticesSize, unsigned int srcindices[], int indicesSize)
+Object::Object()
+{
+}
+Object::Object(int id, unsigned int shaderId, float srcvertices[], int verticesSize, unsigned int srcindices[], int indicesSize, Renderer* renderer)
 {
 	ID = id;
 	shaderID = shaderId;
@@ -12,6 +15,9 @@ Object::Object(int id, unsigned int shaderId, float srcvertices[], int verticesS
 	triangleNumber = indicesSize ;
 	std::memcpy(indices, srcindices, indicesSize * sizeof(unsigned int));
 	position = glm::vec3();
+	this->renderer = renderer;
+	children = {};
+	childrenNumber = 0;
 	//We create our data buffers
 	glGenBuffers(1, &EBO);
 	glGenVertexArrays(1, &VAO);
@@ -48,23 +54,25 @@ Object::~Object()
 {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+	children.clear();
 }
 
-void Object::Draw()
+void Object::Draw(Camera* camera, glm::mat4 modelMat)
 {
-	glBindVertexArray(VAO);
-	unsigned int transformLoc = glGetUniformLocation(shaderID, "transform");
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transMatrix));
-	glDrawElements(GL_TRIANGLES, triangleNumber, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-	//transMatrix = glm::mat4(1.0f);
+	if (renderer != nullptr)
+	{
+		renderer->Draw(camera, modelMat, transMatrix);
+	}
+
+	for (Object* child : children) {
+		child->Draw(camera, modelMat * transMatrix);
+	}
 }
 
 void Object::Translate(glm::vec3 direction)
 {
-	glm::mat4 transMatrix2 = glm::mat4(1.0f);
-	transMatrix2 = glm::translate(transMatrix2, direction);
-	transMatrix = transMatrix2 * transMatrix;
+	transMatrix = glm::translate(transMatrix, direction);
+	
 }
 
 void Object::Rotate(float angle, glm::vec3 axis)
@@ -88,4 +96,13 @@ void Object::SetPosition(glm::vec3 newPos)
 	LoadIdentity();
 	Translate(newPos);
 	position = newPos;
+}
+
+void Object::AddChild(Object* child)
+{
+	children.push_back(child);
+}
+
+void Object::DeleteChild(Object* child)
+{
 }
