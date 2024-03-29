@@ -14,6 +14,7 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 bool  firstMouse = false;
 float yaw = -90.0f;
 float pitch = 0.0f;
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 float planeVertices[] = {
     // positions          // colors           // texture coords
@@ -191,8 +192,11 @@ int main()
     //GENERATE SHADERS
 
     Shader shaderProgram("Vertex.v", "Fragment.fr");
+    Shader lightShaderProgram("Vertex.v", "LightFragment.fr");
 
     //
+    lightShaderProgram.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
+    lightShaderProgram.SetVec3("objectColor", 1.0f, 1.0f, 1.0f);
     shaderProgram.Use();
     //GENERATE MESHES
     Mesh cubeMesh(cubeVertices2,
@@ -203,6 +207,10 @@ int main()
         sizeof(cubeVertices2) / sizeof(float),
         cubeIndices,
         sizeof(cubeIndices) / sizeof(unsigned int)); 
+    Mesh ligthSource(cubeVertices2,
+        sizeof(cubeVertices2) / sizeof(float),
+        cubeIndices,
+        sizeof(cubeIndices) / sizeof(unsigned int));
 
     //
 
@@ -210,7 +218,7 @@ int main()
 
     Renderer MeshRenderer(&cubeMesh, &shaderProgram);
     Renderer MeshRenderer2(&cube2Mesh, &shaderProgram);
-
+    
     //
 
     //GENERATE ENTITIES
@@ -220,12 +228,14 @@ int main()
 
     Object cube(0, &MeshRenderer);
     Object cube2(0, &MeshRenderer2);
+    Object lightSourceObj(0, &MeshRenderer);
 
     // GENERATE SCENE
 
     Object scene(0, nullptr);
     scene.AddChild(&cube);
     scene.AddChild(&cube2);
+    scene.AddChild(&lightSourceObj);
 
     //
     glViewport(0, 0, Vwidth, Vheigth);
@@ -248,6 +258,10 @@ int main()
         Vheigth,
         0.1f,
         100.0f);
+
+
+    lightSourceObj.SetPosition(lightPos);
+    lightSourceObj.Scale(glm::vec3(0.5f, 0.5f, 0.5f));
     while (!glfwWindowShouldClose(window))
     {
         previousTime = time;
