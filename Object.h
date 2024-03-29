@@ -15,7 +15,7 @@ class Object
 {
 public:
 	Object();
-	Object(int id, unsigned int shaderId, float srcvertices[],int verticesSize, unsigned int srcindices[], int indicesSize, Renderer* renderer);
+	Object(int id, Renderer* renderer);
 	~Object();
 	void Draw(Camera* camera, glm::mat4 modelMat);
 	void Translate(glm::vec3 direction);
@@ -32,11 +32,6 @@ public:
 	glm::vec3 position;
 	std::vector<Object*> children;
 	Renderer* renderer;
-	int triangleNumber;
-    unsigned int *indices;
-	float *vertices;
-	unsigned int shaderID;
-	unsigned int VBO, VAO, EBO;
 	int childrenNumber;
 };
 

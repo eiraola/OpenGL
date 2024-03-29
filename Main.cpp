@@ -188,10 +188,13 @@ int main()
         std::cout << "Failed to load texture" << std::endl;
     }
     glEnable(GL_DEPTH_TEST);
-    //Generate a basic shader
+    //GENERATE SHADERS
+
     Shader shaderProgram("Vertex.v", "Fragment.fr");
+
+    //
     shaderProgram.Use();
-    //Generate a cube mesh
+    //GENERATE MESHES
     Mesh cubeMesh(cubeVertices2,
         sizeof(cubeVertices2)/ sizeof(float),
         cubeIndices,
@@ -200,26 +203,31 @@ int main()
         sizeof(cubeVertices2) / sizeof(float),
         cubeIndices,
         sizeof(cubeIndices) / sizeof(unsigned int)); 
+
+    //
+
+    //GENERATE RENDERERS
+
     Renderer MeshRenderer(&cubeMesh, &shaderProgram);
     Renderer MeshRenderer2(&cube2Mesh, &shaderProgram);
-    //glUseProgram(shaderProgram);
-    int vsize = sizeof(planeVertices) / sizeof(float);
-    int isize = sizeof(indices) / sizeof(unsigned int);
-    Object walls[4] = {Object(0, shaderProgram.ID, wallHorizontalVertices, vsize, indices, isize, &MeshRenderer),
-                       Object(0, shaderProgram.ID, wallHorizontalVertices, vsize, indices, isize,&MeshRenderer),
-                       Object(0, shaderProgram.ID, wallVerticalVertices, vsize, indices, isize, &MeshRenderer) ,
-                       Object(0, shaderProgram.ID, wallVerticalVertices, vsize, indices, isize, &MeshRenderer) };
 
+    //
 
-    walls[0].Translate(glm::vec3(0.0f, 1.8f, 0.0));
-    walls[2].Translate(glm::vec3(1.8f, 0.0f, 0.0));
-    Object food(0, shaderProgram.ID, planeVertices, vsize, indices, isize ,&MeshRenderer);
-    Object SnakePart(0, shaderProgram.ID, planeVertices, vsize, indices, isize ,&MeshRenderer);
+    //GENERATE ENTITIES
 
-    int cvsize = sizeof(cubeVertices) / sizeof(float);
-    int cisize = sizeof(cubeIndices) / sizeof(unsigned int);
-    Object cube(0, shaderProgram.ID, cubeVertices, cvsize, cubeIndices, cisize, &MeshRenderer);
-    Object cube2(0, shaderProgram.ID, cubeVertices, cvsize, cubeIndices, cisize, &MeshRenderer2);
+    Object food(0, &MeshRenderer);
+    Object SnakePart(0, &MeshRenderer);
+
+    Object cube(0, &MeshRenderer);
+    Object cube2(0, &MeshRenderer2);
+
+    // GENERATE SCENE
+
+    Object scene(0, nullptr);
+    scene.AddChild(&cube);
+    scene.AddChild(&cube2);
+
+    //
     glViewport(0, 0, Vwidth, Vheigth);
     float previousTime = (float)glfwGetTime();
     float time = (float)glfwGetTime();
@@ -230,11 +238,8 @@ int main()
     float originalMoveTime = 1.0f;
     float moveTime = originalMoveTime;
     float lastMoveTime = (float)glfwGetTime();
-    food.SetPosition(glm::vec3(0.2f, 0.2f, 0.00f) * 3.0f);
 
-    Object scene(0, shaderProgram.ID, planeVertices, vsize, indices, isize, nullptr);
-    scene.AddChild(&cube);
-    scene.AddChild(&SnakePart);
+    
     Camera camera(glm::vec3(0.0f, 2.0f, 3.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 1.0f, 0.0f),
@@ -261,8 +266,6 @@ int main()
         glfwPollEvents();
 
     }
-    //glDeleteVertexArrays(1, &VAO);
-    //glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram.ID);
     stbi_image_free(data);
     glfwTerminate();
