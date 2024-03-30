@@ -30,7 +30,7 @@ void Object::Draw(Camera* camera, glm::mat4 modelMat)
 {
 	if (renderer != nullptr)
 	{
-		renderer->Draw(camera, modelMat, transMatrix);
+		renderer->Draw(camera, transMatrix, modelMat);
 	}
 
 	for (Object* child : children) {

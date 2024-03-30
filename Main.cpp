@@ -14,39 +14,31 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 bool  firstMouse = false;
 float yaw = -90.0f;
 float pitch = 0.0f;
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightPos(0.0f, -2.0f, 1.5f);
+bool rotate = false;
 
 float planeVertices[] = {
-    // positions          // colors           // texture coords
-     0.09f,  0.09f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     0.09f, -0.09f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -0.09f, -0.09f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -0.09f,  0.09f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 
+    // positions        // normals          // colors           // texture coords
+     0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+     0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+    -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+    -0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 
 };
 float cubeVertices[] = {
-    // positions          // colors           // texture coords
-      0.1f,  0.1f, -0.1f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right 0
-      0.1f, -0.1f, -0.1f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right 1
-     -0.1f, -0.1f, -0.1f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left 2
-     -0.1f,  0.1f, -0.1f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left  3
-
-      0.1f,  0.1f, 0.1f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right 4
-      0.1f, -0.1f, 0.1f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right 5
-     -0.1f, -0.1f, 0.1f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left 6 
-     -0.1f,  0.1f, 0.1f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 7
+    // positions          // normals          // colors           // texture coords
+      0.5f,  0.5f, -0.5f,   0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,  1.0f, 1.0f,   // top right 0
+      0.5f, -0.5f, -0.5f,   0.5f, -0.5f, -0.5f,   0.0f, 1.0f, 0.0f,  1.0f, 0.0f,   // bottom right 1
+     -0.5f, -0.5f, -0.5f,  -0.5f, -0.5f, -0.5f,   0.0f, 0.0f, 1.0f,  0.0f, 0.0f,   // bottom left 2
+     -0.5f,  0.5f, -0.5f,  -0.5f,  0.5f, -0.5f,   1.0f, 1.0f, 0.0f,  0.0f, 1.0f,    // top left  3
+                                                                                   
+      0.5f,  0.5f, 0.5f,    0.5f,  0.5f, 0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right 4
+      0.5f, -0.5f, 0.5f,    0.5f, -0.5f, 0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right 5
+     -0.5f, -0.5f, 0.5f,   -0.5f, -0.5f, 0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left 6 
+     -0.5f,  0.5f, 0.5f,   -0.5f,  0.5f, 0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 7
 };
-float cubeVertices2[] = {
-    // positions          // colors           // texture coords
-      0.2f,  0.2f, -0.1f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right 0
-      0.2f,  0.0f, -0.1f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right 1
-      0.0f,  0.0f, -0.1f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left 2
-      0.0f,  0.2f, -0.1f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left  3
 
-      0.2f,  0.2f, 0.1f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right 4
-      0.2f,  0.0f, 0.1f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right 5
-      0.0f,  0.0f, 0.1f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left 6 
-      0.0f,  0.2f, 0.1f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 7
-};
+
+
 unsigned int cubeIndices[] = {  // note that we start from 0!
     0, 1, 2,   // first triangle
     2, 3, 0,   // second triangle
@@ -66,23 +58,9 @@ unsigned int cubeIndices[] = {  // note that we start from 0!
     0, 1, 5,   // third triangle
     5, 4, 0   // forth triangle
 };
-float wallHorizontalVertices[] = {
-    // positions          // colors           // texture coords
-    1.0f, -0.8f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -1.0f, -1.0f, 0.0f ,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -1.1f, -0.8f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 
-};  
 
-float wallVerticalVertices[] = {
-    // positions          // colors           // texture coords
-    -0.8f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-    -0.8f,  -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -1.0f, -1.0f, 0.0f ,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -1.1f, 1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 
-};
 
-unsigned int indices[] = {  // note that we start from 0!
+unsigned int planeIndices[] = {  // note that we start from 0!
     0, 1, 2,   // first triangle
     2, 3, 0,   // second triangle
 };
@@ -98,6 +76,10 @@ void processInput(GLFWwindow* window)
     float movementValue = 0.1f;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_ENTER)== GLFW_PRESS)
+    {
+        rotate = !rotate;
+    }
 
 }
 
@@ -113,39 +95,6 @@ void InitializeOpenGl() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
-//void mouse_callback(GLFWwindow* window, double xpos, double ypos)
-//{
-//    std::cout << xpos << "X pos " << std::endl;
-//    if (firstMouse)
-//    {
-//        lastX = xpos;
-//        lastY = ypos;
-//        firstMouse = false;
-//    }
-//
-//    float xoffset = xpos - lastX;
-//    float yoffset = lastY - ypos;
-//    lastX = xpos;
-//    lastY = ypos;
-//
-//    float sensitivity = 0.1f;
-//    xoffset *= sensitivity;
-//    yoffset *= sensitivity;
-//
-//    yaw += xoffset;
-//    pitch += yoffset;
-//
-//    if (pitch > 89.0f)
-//        pitch = 89.0f;
-//    if (pitch < -89.0f)
-//        pitch = -89.0f;
-//
-//    glm::vec3 direction;
-//    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-//    direction.y = sin(glm::radians(pitch));
-//    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-//    cameraFront = glm::normalize(direction);
-//}
 int main()
 {
     InitializeOpenGl();
@@ -166,28 +115,29 @@ int main()
         return -1;
     }
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+   // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     //glfwSetCursorPosCallback(window, mouse_callback);
     /*We generate textures*/ 
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    int width, height, nrChannels;
-    unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
-
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
+    //unsigned int texture;
+    //glGenTextures(1, &texture);
+    //glBindTexture(GL_TEXTURE_2D, texture);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //
+    //int width, height, nrChannels;
+    //unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
+    //
+    //if (data)
+    //{
+    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    //    glGenerateMipmap(GL_TEXTURE_2D);
+    //}
+    //else
+    //{
+    //    std::cout << "Failed to load texture" << std::endl;
+    //}
     glEnable(GL_DEPTH_TEST);
     //GENERATE SHADERS
 
@@ -195,20 +145,25 @@ int main()
     Shader lightShaderProgram("Vertex.v", "LightFragment.fr");
 
     //
+    lightShaderProgram.Use();
     lightShaderProgram.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
-    lightShaderProgram.SetVec3("objectColor", 1.0f, 1.0f, 1.0f);
+    lightShaderProgram.SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    lightShaderProgram.Use();
+    lightShaderProgram.SetVec3("lightPos", lightPos.x,lightPos.y, lightPos.z);
+    lightShaderProgram.SetVec3("viewPos", 0.0f, 2.0f, 3.0f); 
     shaderProgram.Use();
     //GENERATE MESHES
-    Mesh cubeMesh(cubeVertices2,
-        sizeof(cubeVertices2)/ sizeof(float),
+    Mesh cubeMesh(cubeVertices,
+        sizeof(cubeVertices)/ sizeof(float),
         cubeIndices,
         sizeof(cubeIndices)/sizeof(unsigned int));
-    Mesh cube2Mesh(cubeVertices2,
-        sizeof(cubeVertices2) / sizeof(float),
-        cubeIndices,
-        sizeof(cubeIndices) / sizeof(unsigned int)); 
-    Mesh ligthSource(cubeVertices2,
-        sizeof(cubeVertices2) / sizeof(float),
+   
+    Mesh planeMeshh(planeVertices,
+        sizeof(planeVertices) / sizeof(float),
+        planeIndices,
+        sizeof(planeIndices) / sizeof(unsigned int));
+    Mesh ligthSource(cubeVertices,
+        sizeof(cubeVertices) / sizeof(float),
         cubeIndices,
         sizeof(cubeIndices) / sizeof(unsigned int));
 
@@ -216,26 +171,58 @@ int main()
 
     //GENERATE RENDERERS
 
-    Renderer MeshRenderer(&cubeMesh, &shaderProgram);
-    Renderer MeshRenderer2(&cube2Mesh, &shaderProgram);
+    Renderer MeshRenderer(&planeMeshh, &lightShaderProgram);
+    Renderer MeshRenderer2(&planeMeshh, &lightShaderProgram);
+    Renderer LMeshRenderer(&cubeMesh, &lightShaderProgram);
     
     //
 
     //GENERATE ENTITIES
 
-    Object food(0, &MeshRenderer);
-    Object SnakePart(0, &MeshRenderer);
+    Object PlaneUP(0, &MeshRenderer);
+    PlaneUP.Translate(glm::vec3(0.0f, 0.5f, 0.0f));
+
+    Object PlaneDown(0, &MeshRenderer);
+    PlaneDown.Translate(glm::vec3(0.0f, -0.5f, 0.0f));
+    PlaneDown.Rotate(glm::radians(180.f), glm::vec3(1.0f, 0.0f, 0.0f));
+    PlaneDown.Rotate(glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    Object PlaneForward(0, &MeshRenderer);
+    PlaneForward.Translate(glm::vec3(0.0f, 0.0f, 0.5f));
+    PlaneForward.Rotate(glm::radians(90.f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    Object PlaneBack(0, &MeshRenderer);
+    PlaneBack.Translate(glm::vec3(0.0f, 0.0f, -0.5f));
+    PlaneBack.Rotate(glm::radians(-90.f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    Object PlaneRight(0, &MeshRenderer);
+    PlaneRight.Translate(glm::vec3(0.5f, 0.0f, 0.0f));
+    PlaneRight.Rotate(glm::radians(-90.f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    Object PlaneLeft(0, &MeshRenderer);
+    PlaneLeft.Translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+    PlaneLeft.Rotate(glm::radians(90.f), glm::vec3(0.0f, 0.0f, 1.0f));
+    Object flatCube(0, nullptr);
+    flatCube.AddChild(&PlaneUP);
+    flatCube.AddChild(&PlaneDown);
+    flatCube.AddChild(&PlaneForward);
+    flatCube.AddChild(&PlaneBack);
+    flatCube.AddChild(&PlaneLeft);
+    flatCube.AddChild(&PlaneRight);
 
     Object cube(0, &MeshRenderer);
-    Object cube2(0, &MeshRenderer2);
+    Object cube2(0, &MeshRenderer);
     Object lightSourceObj(0, &MeshRenderer);
+    Object lightSourcePlace(0, &LMeshRenderer);
 
-    // GENERATE SCENE
+    // GENERATE SCENE 
 
     Object scene(0, nullptr);
-    scene.AddChild(&cube);
-    scene.AddChild(&cube2);
+    scene.AddChild(&flatCube);
     scene.AddChild(&lightSourceObj);
+    flatCube.Rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //scene.AddChild(&cube2);
+    
 
     //
     glViewport(0, 0, Vwidth, Vheigth);
@@ -261,11 +248,22 @@ int main()
 
 
     lightSourceObj.SetPosition(lightPos);
-    lightSourceObj.Scale(glm::vec3(0.5f, 0.5f, 0.5f));
+    lightSourceObj.Scale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+    cube.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
     while (!glfwWindowShouldClose(window))
     {
+        
         previousTime = time;
         time = (float)glfwGetTime();
+        //lightPos = glm::vec3(
+        //    glm::cos(time),
+        //    0.0f,
+        //    glm::sin(time)
+        //);
+        //
+        //lightShaderProgram.Use();
+        //lightShaderProgram.SetVec3("lightPos", lightPos.x, lightPos.y, lightPos.z);
         deltaTime = time - previousTime;
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -273,15 +271,26 @@ int main()
 
 
         processInput(window);
-        cube.Translate(glm::vec3(0.3f, 0.0f, 0.0f)*deltaTime);
+       // cube.Translate(glm::vec3(0.3f, 0.0f, 0.0f)*deltaTime);
+        //cube.Rotate(glm::radians(45.0f *deltaTime), glm::vec3(0.0f, 1.0f, 0.0f));
+        //cube2.Rotate(glm::radians(45.0f * deltaTime), glm::vec3(1.0f, 0.0f, 0.0f));
+        if (rotate)
+        {
+
+            scene.Rotate(glm::radians(45.0f * deltaTime), glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        lightPos = glm::vec3(glm::cos(time ) , 1.0f, glm::sin(time ));
+        lightShaderProgram.Use();
+        lightShaderProgram.SetVec3("lightPos", lightPos.x, lightPos.y, lightPos.z);
         scene.Draw(&camera, glm::mat4(1.0f));
-        
+        lightSourceObj.SetPosition(lightPos);
+        lightSourceObj.Draw(&camera, glm::mat4(1.0f));
         glfwSwapBuffers(window);
         glfwPollEvents();
 
     }
     glDeleteProgram(shaderProgram.ID);
-    stbi_image_free(data);
+    //stbi_image_free(data);
     glfwTerminate();
     return 0;
 }

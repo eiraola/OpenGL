@@ -73,6 +73,7 @@
     <None Include="dependencies\lib\glfw3.dll" />
     <None Include="Fragment.fr" />
     <None Include="Vertex.v" />
+    <None Include="LightFragment.fr" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
