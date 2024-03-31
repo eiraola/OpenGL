@@ -154,13 +154,20 @@ int main()
     lightShaderProgram.Use();
     lightShaderProgram.SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
     lightShaderProgram.Use();
-    lightShaderProgram.SetVec3("lightPos", lightPos.x,lightPos.y, lightPos.z);
+    lightShaderProgram.SetVec3("light.position", lightPos.x,lightPos.y, lightPos.z);
     lightShaderProgram.SetVec3("viewPos", 0.0f, 2.0f, 3.0f); 
     lightShaderProgram.SetVec3("material.specular", 1.0f, 1.0f, 1.0f);
     lightShaderProgram.SetFloat("material.shininess", 64.0f);
     lightShaderProgram.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
     lightShaderProgram.SetVec3("light.diffuse", 0.5f, 1.0f, 1.0f); // darken diffuse light a bit
     lightShaderProgram.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
+    lightShaderProgram.SetFloat("light.constant", 1.0f);
+    lightShaderProgram.SetFloat("light.linear", 0.09f);
+    lightShaderProgram.SetFloat("light.quadratic", 0.032f);
+    lightShaderProgram.SetVec3("light.direction", 0.0f, -1.0f, 0.0f);
+    lightShaderProgram.SetFloat("light.cutOff", glm::cos(glm::radians(18.5f)));
+
+    lightShaderProgram.SetFloat("light.outerCutOff", glm::cos(glm::radians(31.0f)));
     lightShaderProgram.SetInt("material.diffuseMap", 0);
     lightShaderProgram.SetInt("material.specular", 1);
     //shaderProgram.Use();
@@ -227,6 +234,22 @@ int main()
     flatCube.AddChild(&PlaneLeft);
     flatCube.AddChild(&PlaneRight);
 
+    Object flatCube2(0, nullptr);
+    flatCube2.AddChild(&PlaneUP);
+    flatCube2.AddChild(&PlaneDown);
+    flatCube2.AddChild(&PlaneForward);
+    flatCube2.AddChild(&PlaneBack);
+    flatCube2.AddChild(&PlaneLeft);
+    flatCube2.AddChild(&PlaneRight);
+
+    Object flatCube3(0, nullptr);
+    flatCube3.AddChild(&PlaneUP);
+    flatCube3.AddChild(&PlaneDown);
+    flatCube3.AddChild(&PlaneForward);
+    flatCube3.AddChild(&PlaneBack);
+    flatCube3.AddChild(&PlaneLeft);
+    flatCube3.AddChild(&PlaneRight);
+
     Object cube(0, &MeshRenderer);
     Object cube2(0, &MeshRenderer);
     Object lightSourceObj(0, &MeshRenderer);
@@ -236,7 +259,14 @@ int main()
 
     Object scene(0, nullptr);
     scene.AddChild(&flatCube);
+    scene.AddChild(&flatCube2);
+    scene.AddChild(&flatCube3);
     scene.AddChild(&lightSourceObj);
+    
+
+    flatCube.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+    flatCube2.SetPosition(glm::vec3(0.0f, -4.0f, 0.0f));
+    flatCube3.SetPosition(glm::vec3(0.0f, -8.0f, 0.0f));
     flatCube.Rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     //scene.AddChild(&cube2);
     
@@ -254,7 +284,7 @@ int main()
     float lastMoveTime = (float)glfwGetTime();
 
     
-    Camera camera(glm::vec3(0.0f, 2.0f, 3.0f),
+    Camera camera(glm::vec3(0.0f, 2.0f,7.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 1.0f, 0.0f),
         45.0f,
@@ -296,12 +326,13 @@ int main()
 
             scene.Rotate(glm::radians(45.0f * deltaTime), glm::vec3(0.0f, 1.0f, 0.0f));
         }
-        lightPos = glm::vec3(glm::cos(time ) , 1.0f, glm::sin(time ));
+        lightPos = glm::vec3(glm::cos(time ) * 0.0f, 1.5f, glm::sin(time ) * 0.0f);
         lightShaderProgram.Use();
-        lightShaderProgram.SetVec3("lightPos", lightPos.x, lightPos.y, lightPos.z);
+        lightShaderProgram.SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
         scene.Draw(&camera, glm::mat4(1.0f));
         lightSourceObj.SetPosition(lightPos);
-        lightSourceObj.Draw(&camera, glm::mat4(1.0f));
+        //flatCube3.SetPosition(lightPos);
+        //lightSourceObj.Draw(&camera, glm::mat4(1.0f));
         glfwSwapBuffers(window);
         glfwPollEvents();
 
