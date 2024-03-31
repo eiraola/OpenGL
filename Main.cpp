@@ -143,6 +143,7 @@ int main()
 
     Shader shaderProgram("Vertex.v", "Fragment.fr");
     Shader lightShaderProgram("Vertex.v", "LightFragment.fr");
+    
 
     //
     lightShaderProgram.Use();
@@ -151,6 +152,13 @@ int main()
     lightShaderProgram.Use();
     lightShaderProgram.SetVec3("lightPos", lightPos.x,lightPos.y, lightPos.z);
     lightShaderProgram.SetVec3("viewPos", 0.0f, 2.0f, 3.0f); 
+    lightShaderProgram.SetVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+    lightShaderProgram.SetVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+    lightShaderProgram.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    lightShaderProgram.SetFloat("material.shininess", 32.0f);
+    lightShaderProgram.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+    lightShaderProgram.SetVec3("light.diffuse", 0.0f, 1.0f, 1.0f); // darken diffuse light a bit
+    lightShaderProgram.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
     shaderProgram.Use();
     //GENERATE MESHES
     Mesh cubeMesh(cubeVertices,
