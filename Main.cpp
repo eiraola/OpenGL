@@ -18,11 +18,11 @@ glm::vec3 lightPos(0.0f, -2.0f, 1.5f);
 bool rotate = false;
 
 float planeVertices[] = {
-    // positions        // normals          // colors           // texture coords
-     0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 
+    // positions            // normals          // colors           // texture coords
+     0.5f, 0.0f,  0.5f,     0.0f, 1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+     0.5f, 0.0f, -0.5f,     0.0f, 1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+    -0.5f, 0.0f, -0.5f,     0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+    -0.5f, 0.0f,  0.5f,     0.0f, 1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 
 };
 float cubeVertices[] = {
     // positions          // normals          // colors           // texture coords
@@ -94,7 +94,30 @@ void InitializeOpenGl() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
+unsigned int LoadTexture(char const* path) {
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
+
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+
+    return texture;
+}
 int main()
 {
     InitializeOpenGl();
@@ -118,48 +141,34 @@ int main()
    // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     //glfwSetCursorPosCallback(window, mouse_callback);
     /*We generate textures*/ 
-    //unsigned int texture;
-    //glGenTextures(1, &texture);
-    //glBindTexture(GL_TEXTURE_2D, texture);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    //
-    //int width, height, nrChannels;
-    //unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
-    //
-    //if (data)
-    //{
-    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    //    glGenerateMipmap(GL_TEXTURE_2D);
-    //}
-    //else
-    //{
-    //    std::cout << "Failed to load texture" << std::endl;
-    //}
+    unsigned int texture = LoadTexture("container2jp.jpg");
+    unsigned int textureSpec = LoadTexture("container2_specular.jpg");
     glEnable(GL_DEPTH_TEST);
     //GENERATE SHADERS
 
-    Shader shaderProgram("Vertex.v", "Fragment.fr");
+    //Shader shaderProgram("Vertex.v", "Fragment.fr");
     Shader lightShaderProgram("Vertex.v", "LightFragment.fr");
     
 
     //
     lightShaderProgram.Use();
-    lightShaderProgram.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
     lightShaderProgram.SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
     lightShaderProgram.Use();
     lightShaderProgram.SetVec3("lightPos", lightPos.x,lightPos.y, lightPos.z);
     lightShaderProgram.SetVec3("viewPos", 0.0f, 2.0f, 3.0f); 
-    lightShaderProgram.SetVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-    lightShaderProgram.SetVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-    lightShaderProgram.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
-    lightShaderProgram.SetFloat("material.shininess", 32.0f);
+    lightShaderProgram.SetVec3("material.specular", 1.0f, 1.0f, 1.0f);
+    lightShaderProgram.SetFloat("material.shininess", 64.0f);
     lightShaderProgram.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-    lightShaderProgram.SetVec3("light.diffuse", 0.0f, 1.0f, 1.0f); // darken diffuse light a bit
+    lightShaderProgram.SetVec3("light.diffuse", 0.5f, 1.0f, 1.0f); // darken diffuse light a bit
     lightShaderProgram.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
-    shaderProgram.Use();
+    lightShaderProgram.SetInt("material.diffuseMap", 0);
+    lightShaderProgram.SetInt("material.specular", 1);
+    //shaderProgram.Use();
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, textureSpec);
     //GENERATE MESHES
     Mesh cubeMesh(cubeVertices,
         sizeof(cubeVertices)/ sizeof(float),
@@ -297,7 +306,7 @@ int main()
         glfwPollEvents();
 
     }
-    glDeleteProgram(shaderProgram.ID);
+    glDeleteProgram(lightShaderProgram.ID);
     //stbi_image_free(data);
     glfwTerminate();
     return 0;
