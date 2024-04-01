@@ -152,22 +152,22 @@ int main()
 
     //
     lightShaderProgram.Use();
-    lightShaderProgram.SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
-    lightShaderProgram.Use();
-    lightShaderProgram.SetVec3("light.position", lightPos.x,lightPos.y, lightPos.z);
+    lightShaderProgram.Use(); 
+    lightShaderProgram.SetVec3("lights[0].position", lightPos.x,lightPos.y, lightPos.z);
     lightShaderProgram.SetVec3("viewPos", 0.0f, 2.0f, 3.0f); 
     lightShaderProgram.SetVec3("material.specular", 1.0f, 1.0f, 1.0f);
     lightShaderProgram.SetFloat("material.shininess", 64.0f);
-    lightShaderProgram.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-    lightShaderProgram.SetVec3("light.diffuse", 0.5f, 1.0f, 1.0f); // darken diffuse light a bit
-    lightShaderProgram.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
-    lightShaderProgram.SetFloat("light.constant", 1.0f);
-    lightShaderProgram.SetFloat("light.linear", 0.09f);
-    lightShaderProgram.SetFloat("light.quadratic", 0.032f);
-    lightShaderProgram.SetVec3("light.direction", 0.0f, -1.0f, 0.0f);
-    lightShaderProgram.SetFloat("light.cutOff", glm::cos(glm::radians(18.5f)));
+    lightShaderProgram.SetVec3("lights[0].ambient", 0.2f, 0.2f, 0.2f);
+    lightShaderProgram.SetVec3("lights[0].diffuse", 1.0f, 1.0f, 1.0f); // darken diffuse light a bit
+    lightShaderProgram.SetVec3("lights[0].specular", 1.0f, 1.0f, 1.0f);
+    lightShaderProgram.SetFloat("lights[0].constant", 1.0f);
+    lightShaderProgram.SetFloat("lights[0].linear", 0.09f);
+    lightShaderProgram.SetFloat("lights[0].quadratic", 0.032f);
+    lightShaderProgram.SetVec3("lights[0].direction", 0.0f, -1.0f, 0.0f);
+    lightShaderProgram.SetFloat("lights[0].cutOff", glm::cos(glm::radians(18.5f)));
+    lightShaderProgram.SetFloat("lights[0].outerCutOff", glm::cos(glm::radians(31.0f)));
+    lightShaderProgram.SetVec3("lights[0].type", 0.0f, 0.0f, 1.0f);
 
-    lightShaderProgram.SetFloat("light.outerCutOff", glm::cos(glm::radians(31.0f)));
     lightShaderProgram.SetInt("material.diffuseMap", 0);
     lightShaderProgram.SetInt("material.specular", 1);
     //shaderProgram.Use();
@@ -328,7 +328,7 @@ int main()
         }
         lightPos = glm::vec3(glm::cos(time ) * 0.0f, 1.5f, glm::sin(time ) * 0.0f);
         lightShaderProgram.Use();
-        lightShaderProgram.SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
+        lightShaderProgram.SetVec3("lights[0].position", lightPos.x, lightPos.y, lightPos.z);
         scene.Draw(&camera, glm::mat4(1.0f));
         lightSourceObj.SetPosition(lightPos);
         //flatCube3.SetPosition(lightPos);
