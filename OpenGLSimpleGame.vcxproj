@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\OpenGLSimpleGame;$(SolutionDir)\OpenGLSimpleGame\dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\OpenGLSimpleGame;$(SolutionDir)\OpenGLSimpleGame\dependencies\include;$(SolutionDir)\OpenGLSimpleGame\dependencies\imGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +131,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="dependencies\imGUI\imgui.cpp" />
+    <ClCompile Include="dependencies\imGUI\imgui_demo.cpp" />
+    <ClCompile Include="dependencies\imGUI\imgui_draw.cpp" />
+    <ClCompile Include="dependencies\imGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="dependencies\imGUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="dependencies\imGUI\imgui_tables.cpp" />
+    <ClCompile Include="dependencies\imGUI\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -143,6 +150,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="dependencies\imGUI\imconfig.h" />
+    <ClInclude Include="dependencies\imGUI\imgui.h" />
+    <ClInclude Include="dependencies\imGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="dependencies\imGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="dependencies\imGUI\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="dependencies\imGUI\imgui_internal.h" />
+    <ClInclude Include="dependencies\imGUI\imstb_rectpack.h" />
+    <ClInclude Include="dependencies\imGUI\imstb_textedit.h" />
+    <ClInclude Include="dependencies\imGUI\imstb_truetype.h" />
     <ClInclude Include="dependencies\inlcude\GLFW\glfw3.h" />
     <ClInclude Include="dependencies\inlcude\GLFW\glfw3native.h" />
     <ClInclude Include="Mesh.h" />

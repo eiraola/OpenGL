@@ -1,3 +1,6 @@
+#include<imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <Shader.h>
@@ -123,7 +126,7 @@ int main()
     InitializeOpenGl();
     int Vwidth = 1200;
     int Vheigth = 800;
-    GLFWwindow* window = glfwCreateWindow(Vwidth, Vheigth, "Snake", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(Vwidth, Vheigth, "OpenGL Game?", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -137,7 +140,16 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+
+
+   // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
    // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     //glfwSetCursorPosCallback(window, mouse_callback);
     /*We generate textures*/ 
@@ -149,9 +161,8 @@ int main()
     //Shader shaderProgram("Vertex.v", "Fragment.fr");
     Shader lightShaderProgram("Vertex.v", "LightFragment.fr");
     
-
+    printf("%s\n", glGetString(GL_VERSION));
     //
-    lightShaderProgram.Use();
     lightShaderProgram.Use(); 
     lightShaderProgram.SetVec3("lights[0].position", lightPos.x,lightPos.y, lightPos.z);
     lightShaderProgram.SetVec3("viewPos", 0.0f, 2.0f, 3.0f); 
@@ -300,6 +311,9 @@ int main()
     cube.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
     while (!glfwWindowShouldClose(window))
     {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
         
         previousTime = time;
         time = (float)glfwGetTime();
@@ -326,17 +340,45 @@ int main()
 
             scene.Rotate(glm::radians(45.0f * deltaTime), glm::vec3(0.0f, 1.0f, 0.0f));
         }
-        lightPos = glm::vec3(glm::cos(time ) * 0.0f, 1.5f, glm::sin(time ) * 0.0f);
+        //lightPos = glm::vec3(glm::cos(time ) * 0.0f, 1.5f, glm::sin(time ) * 0.0f);
         lightShaderProgram.Use();
         lightShaderProgram.SetVec3("lights[0].position", lightPos.x, lightPos.y, lightPos.z);
         scene.Draw(&camera, glm::mat4(1.0f));
         lightSourceObj.SetPosition(lightPos);
         //flatCube3.SetPosition(lightPos);
         //lightSourceObj.Draw(&camera, glm::mat4(1.0f));
+        ImGui::Begin("Here is my first window");
+        ImGui::SliderFloat("X", &lightPos.x, -10.0f, 10.0f);
+        ImGui::SliderFloat("Y", &lightPos.y, -10.0f, 10.0f);
+        ImGui::SliderFloat("Z", &lightPos.z, -10.0f, 10.0f);
+        if (ImGui::TreeNode("Bullets"))
+        {
+           
+            if (ImGui::TreeNode("Tree node"))
+            {
+                ImGui::BulletText("Another bullet point");
+                if (ImGui::TreeNode("Tree node"))
+                {
+                    ImGui::BulletText("Another bullet point");
+                    ImGui::TreePop();
+                }
+                ImGui::TreePop();
+            }
+
+            ImGui::Bullet(); ImGui::SmallButton("Button");
+            ImGui::TreePop();
+        }
+        ImGui::Text("Hi dude");
+        ImGui::End();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
         glfwPollEvents();
 
     }
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     glDeleteProgram(lightShaderProgram.ID);
     //stbi_image_free(data);
     glfwTerminate();
