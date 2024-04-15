@@ -1,9 +1,9 @@
 #include "Renderer.h"
 
-Renderer::Renderer(Mesh* mesh, Shader* shader)
+Renderer::Renderer(Mesh* mesh, Material* material)
 {
 	this->mesh = mesh;
-	this->shader = shader;
+	this->material = material;
 }
 
 Renderer::~Renderer()
@@ -13,12 +13,7 @@ Renderer::~Renderer()
 
 void Renderer::Draw(Camera* camera, glm::mat4 transMatrix, glm::mat4 modelMatrix)
 {
-
-	shader->Use();
-	shader->Use();
-	shader->SetMat4("model", modelMatrix);
-	shader->SetMat4("transform", transMatrix);
-	shader->SetMat4("view", camera->view);
-	shader->SetMat4("projection", camera->projection);
+	material->SetMaterialValues();
+	material->SetTransformationValues(camera, transMatrix, modelMatrix);
 	mesh->Draw();
 }

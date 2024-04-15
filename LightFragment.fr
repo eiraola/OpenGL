@@ -3,9 +3,11 @@
 //THIS REALLY NEEDS A REFACTOR
 struct Material {
     sampler2D diffuseMap;
+    bool useDiffuseMap;
+    sampler2D specular;
+    bool useSpecularMap;
     vec3 ambient;
     vec3 diffuse;
-    sampler2D specular;
     float shininess;
 }; 
   
