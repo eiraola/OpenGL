@@ -128,17 +128,22 @@
     <ClInclude Include="Material.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\config.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dependencies\lib\glfw3.dll" />
     <None Include="Fragment.fr" />
     <None Include="Vertex.v" />
     <None Include="LightFragment.fr" />
+    <None Include="imgui.ini" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
     <Library Include="dependencies\lib\glfw3_mt.lib" />
     <Library Include="dependencies\lib\glfw3dll.lib" />
+    <Library Include="dependencies\lib\assimp.lib" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">

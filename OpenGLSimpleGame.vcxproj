@@ -161,6 +161,7 @@
     <ClInclude Include="dependencies\imGUI\imstb_rectpack.h" />
     <ClInclude Include="dependencies\imGUI\imstb_textedit.h" />
     <ClInclude Include="dependencies\imGUI\imstb_truetype.h" />
+    <ClInclude Include="dependencies\include\assimp\config.h" />
     <ClInclude Include="dependencies\inlcude\GLFW\glfw3.h" />
     <ClInclude Include="dependencies\inlcude\GLFW\glfw3native.h" />
     <ClInclude Include="Material.h" />
@@ -173,10 +174,12 @@
   <ItemGroup>
     <None Include="dependencies\lib\glfw3.dll" />
     <None Include="Fragment.fr" />
+    <None Include="imgui.ini" />
     <None Include="LightFragment.fr" />
     <None Include="Vertex.v" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="dependencies\lib\assimp.lib" />
     <Library Include="dependencies\lib\glfw3.lib" />
     <Library Include="dependencies\lib\glfw3dll.lib" />
     <Library Include="dependencies\lib\glfw3_mt.lib" />
