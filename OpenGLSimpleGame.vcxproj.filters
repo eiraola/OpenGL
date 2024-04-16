@@ -131,6 +131,114 @@
     <ClInclude Include="dependencies\include\assimp\config.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\Compiler\poppack1.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\Compiler\pstdint.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\Compiler\pushpack1.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\port\AndroidJNI\AndroidJNIIOSystem.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\ai_assert.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\anim.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\camera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\cexport.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\cfileio.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\cimport.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\color4.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\DefaultLogger.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\defs.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\Exporter.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\Importer.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\importerdesc.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\IOStream.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\IOSystem.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\light.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\Logger.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\LogStream.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\material.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\matrix3x3.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\matrix4x4.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\mesh.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\metadata.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\NullLogger.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\postprocess.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\ProgressHandler.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\quaternion.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\scene.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\texture.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\types.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\vector2.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\vector3.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\version.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dependencies\lib\glfw3.dll" />
@@ -138,6 +246,27 @@
     <None Include="Vertex.v" />
     <None Include="LightFragment.fr" />
     <None Include="imgui.ini" />
+    <None Include="dependencies\include\assimp\color4.inl">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="dependencies\include\assimp\material.inl">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="dependencies\include\assimp\matrix3x3.inl">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="dependencies\include\assimp\matrix4x4.inl">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="dependencies\include\assimp\quaternion.inl">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="dependencies\include\assimp\vector2.inl">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="dependencies\include\assimp\vector3.inl">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
