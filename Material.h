@@ -11,6 +11,7 @@ public:
         bool usesDiffuseMap, 
         unsigned int specularMap, 
         bool usesSpecularMap, 
+        glm::vec3 specularValue,
         glm::vec3 ambientValue, 
         glm::vec3 diffuseValue, 
         float shininessValue);
@@ -23,6 +24,7 @@ public:
     bool usesDiffuseMap;
     unsigned int specularMap;
     bool usesSpecularMap;
+    glm::vec3 specularValue;
     glm::vec3 ambientValue;
     glm::vec3 diffuseValue;
     float shininessValue;

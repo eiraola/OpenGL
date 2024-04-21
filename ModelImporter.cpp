@@ -111,6 +111,7 @@ Material* ModelImporter::ProcessMaterial(aiMesh* mesh, const aiScene* scene, std
     bool usesDiffuseMap = false;
     unsigned int specularMap = 0;
     bool usesSpecularMap = false;
+    glm::vec3 specularValue(0.5f, 0.5f, 0.5f);
     glm::vec3 ambientValue(0.1f, 0.1f, 0.1f);
     glm::vec3 diffuseValue(0.9f, 0.1f, 0.1f);
     float shininessValue = 0.03f;
@@ -123,11 +124,11 @@ Material* ModelImporter::ProcessMaterial(aiMesh* mesh, const aiScene* scene, std
 
     if (material->GetTextureCount(aiTextureType_SPECULAR) >= 0)
     {
-        specularMap = true;
-        diffuseMap = LoadTexture(material, aiTextureType_SPECULAR, path);
+        usesSpecularMap = true;
+        specularMap = LoadTexture(material, aiTextureType_SPECULAR, path);
     }
     
-    return new Material(diffuseMap, usesDiffuseMap, specularMap, usesSpecularMap, ambientValue,diffuseValue, shininessValue);
+    return new Material(diffuseMap, usesDiffuseMap, specularMap, usesSpecularMap, specularValue, ambientValue,diffuseValue, shininessValue);
 }
 
 unsigned int ModelImporter::LoadTexture(aiMaterial* mat, aiTextureType type, std::string path)
@@ -160,7 +161,7 @@ unsigned int ModelImporter::TextureFromFile(const char* path, const std::string&
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
     if (data)
     {
-        GLenum format;
+        GLenum format = GL_RED;
         if (nrComponents == 1)
             format = GL_RED;
         else if (nrComponents == 3)
