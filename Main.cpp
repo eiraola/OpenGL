@@ -140,7 +140,7 @@ int main()
     lightShaderProgram.SetVec3("lights[0].direction", 0.0f, -1.0f, 0.0f);
     lightShaderProgram.SetFloat("lights[0].cutOff", glm::cos(glm::radians(18.5f)));
     lightShaderProgram.SetFloat("lights[0].outerCutOff", glm::cos(glm::radians(31.0f)));
-    lightShaderProgram.SetVec3("lights[0].type", 1.0f, 0.0f, 0.0f);
+    lightShaderProgram.SetVec3("lights[0].type", 0.0f, 1.0f, 0.0f);
 
     ModelImporter modelImporter;
     Object* importedModel = modelImporter.LoadModel("C:/Users/emont/OneDrive/Escritorio/Xwing/X-wing.obj", &lightShaderProgram);
@@ -149,9 +149,9 @@ int main()
     //Renderer* renderer = new Renderer(mesh, material);
 
     unsigned int diffuseMap = textureSpec;
-    bool usesDiffuseMap = false;
+    bool usesDiffuseMap = true;
     unsigned int specularMap = texture;
-    bool usesSpecularMap = false;
+    bool usesSpecularMap = true;
     glm::vec3 specularValue(0.5f, 0.5f, 0.5f);
     glm::vec3 ambientValue(0.1f, 0.1f, 0.1f);
     glm::vec3 diffuseValue(0.9f, 0.1f, 0.1f);
@@ -166,7 +166,7 @@ int main()
    // // GENERATE SCENE 
 
     Object scene(0);
-    //scene.AddChild(importedModel);
+    scene.AddChild(importedModel);
     scene.AddChild(plane);
     
     //
