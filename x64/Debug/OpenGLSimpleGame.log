@@ -1,2 +1,4 @@
-﻿  Material.cpp
+﻿  Main.cpp
+C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Main.cpp(190,9): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Main.cpp(189,9): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
   OpenGLSimpleGame.vcxproj -> C:\Users\emont\source\repos\OpenGLSimpleGame\x64\Debug\OpenGLSimpleGame.exe
