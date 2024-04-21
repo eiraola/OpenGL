@@ -27,51 +27,19 @@ float planeVertices[] = {
     -0.5f, 0.0f, -0.5f,     0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
     -0.5f, 0.0f,  0.5f,     0.0f, 1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 
 };
-float cubeVertices[] = {
-    // positions          // normals          // colors           // texture coords
-      0.5f,  0.5f, -0.5f,   0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,  1.0f, 1.0f,   // top right 0
-      0.5f, -0.5f, -0.5f,   0.5f, -0.5f, -0.5f,   0.0f, 1.0f, 0.0f,  1.0f, 0.0f,   // bottom right 1
-     -0.5f, -0.5f, -0.5f,  -0.5f, -0.5f, -0.5f,   0.0f, 0.0f, 1.0f,  0.0f, 0.0f,   // bottom left 2
-     -0.5f,  0.5f, -0.5f,  -0.5f,  0.5f, -0.5f,   1.0f, 1.0f, 0.0f,  0.0f, 1.0f,    // top left  3
-                                                                                   
-      0.5f,  0.5f, 0.5f,    0.5f,  0.5f, 0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right 4
-      0.5f, -0.5f, 0.5f,    0.5f, -0.5f, 0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right 5
-     -0.5f, -0.5f, 0.5f,   -0.5f, -0.5f, 0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left 6 
-     -0.5f,  0.5f, 0.5f,   -0.5f,  0.5f, 0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left 7
+
+std::vector<Vertex> primitiveVertexData = {
+    Vertex(glm::vec3(0.5f, 0.0f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(1.0f, 1.0f)),
+    Vertex(glm::vec3(0.5f, 0.0f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(1.0f, 0.0f)),
+    Vertex(glm::vec3(-0.5f, 0.0f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
+    Vertex(glm::vec3(-0.5f, 0.0f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)),
 };
 
-
-
-unsigned int cubeIndices[] = {  // note that we start from 0!
-    0, 1, 2,   // first triangle
-    2, 3, 0,   // second triangle
-
-    4, 5, 6,   // third triangle
-    6, 7, 4,   // forth triangle
-
-    4, 0, 3,   // third triangle
-    3, 7, 4,   // forth triangle
-
-    1, 5, 6,   // third triangle
-    6, 2, 1,   // forth triangle
-
-    3, 2, 6,   // third triangle
-    6, 7, 3,   // forth triangle
-
-    0, 1, 5,   // third triangle
-    5, 4, 0   // forth triangle
+std::vector<unsigned int> primitiveIndices = { 
+    0, 1, 2, 
+    2, 3, 0, 
 };
 
-
-unsigned int planeIndices[] = {  // note that we start from 0!
-    0, 1, 2,   // first triangle
-    2, 3, 0,   // second triangle
-};
-float texCoords[] = {
-0.0f, 0.0f,  // lower-left corner  
-1.0f, 0.0f,  // lower-right corner
-0.5f, 1.0f   // top-center corner
-};
 float movementValueY = 0.0f;
 float movementValueX = 0.0f;
 void processInput(GLFWwindow* window)
@@ -183,19 +151,10 @@ int main()
     //shaderProgram.Use();
 
     //GENERATE MESHES
-    Mesh cubeMesh(cubeVertices,
-        sizeof(cubeVertices)/ sizeof(float),
-        cubeIndices,
-        sizeof(cubeIndices)/sizeof(unsigned int));
+    Mesh cubeMesh(primitiveVertexData, primitiveIndices);
    
-    Mesh planeMeshh(planeVertices,
-        sizeof(planeVertices) / sizeof(float),
-        planeIndices,
-        sizeof(planeIndices) / sizeof(unsigned int));
-    Mesh ligthSource(cubeVertices,
-        sizeof(cubeVertices) / sizeof(float),
-        cubeIndices,
-        sizeof(cubeIndices) / sizeof(unsigned int));
+    Mesh planeMeshh(primitiveVertexData, primitiveIndices);
+    Mesh ligthSource(primitiveVertexData, primitiveIndices);
 
     //
 

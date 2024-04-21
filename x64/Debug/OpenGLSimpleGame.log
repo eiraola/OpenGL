@@ -8,10 +8,11 @@
   imgui_widgets.cpp
   image.cpp
   Main.cpp
-C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Main.cpp(306,9): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Main.cpp(305,9): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Main.cpp(265,9): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Main.cpp(264,9): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
   Material.cpp
   Mesh.cpp
+C:\Users\emont\source\repos\OpenGLSimpleGame\OpenGLSimpleGame\Mesh.cpp(23,70): warning C4267: 'argumento': conversión de 'size_t' a 'GLsizei'; posible pérdida de datos
   Object.cpp
   Renderer.cpp
   Shader.cpp
