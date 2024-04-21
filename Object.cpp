@@ -4,15 +4,13 @@ enum EDirection { Forward, Backward, Left, Right };
 Object::Object()
 {
 	ID = 0;
-	renderer = nullptr;
 	children = {};
 	childrenNumber = 0;
 }
 
-Object::Object(int id, Renderer* renderer)
+Object::Object(int id)
 {
 	ID = id;
-	this->renderer = renderer;
 	children = {};
 	childrenNumber = 0;
 }
@@ -26,6 +24,7 @@ void Object::Draw(Camera* camera, glm::mat4 modelMat)
 {
 	if (renderer != nullptr)
 	{
+
 		renderer->Draw(camera, transform.ModelMatrix(), modelMat);
 	}
 
@@ -39,6 +38,8 @@ void Object::AddChild(Object* child)
 {
 	children.push_back(child);
 }
+
+
 
 void Object::DeleteChild(Object* child)
 {

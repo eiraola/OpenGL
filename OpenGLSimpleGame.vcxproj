@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -110,7 +110,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\OpenGLSimpleGame\dependencies\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,6 +143,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -172,7 +173,10 @@
     <ClInclude Include="dependencies\include\assimp\Compiler\pstdint.h" />
     <ClInclude Include="dependencies\include\assimp\Compiler\pushpack1.h" />
     <ClInclude Include="dependencies\include\assimp\config.h" />
+    <ClInclude Include="dependencies\include\assimp\DefaultIOStream.h" />
+    <ClInclude Include="dependencies\include\assimp\DefaultIOSystem.h" />
     <ClInclude Include="dependencies\include\assimp\DefaultLogger.hpp" />
+    <ClInclude Include="dependencies\include\assimp\Defines.h" />
     <ClInclude Include="dependencies\include\assimp\defs.h" />
     <ClInclude Include="dependencies\include\assimp\Exporter.hpp" />
     <ClInclude Include="dependencies\include\assimp\Importer.hpp" />
@@ -193,6 +197,7 @@
     <ClInclude Include="dependencies\include\assimp\ProgressHandler.hpp" />
     <ClInclude Include="dependencies\include\assimp\quaternion.h" />
     <ClInclude Include="dependencies\include\assimp\scene.h" />
+    <ClInclude Include="dependencies\include\assimp\SceneCombiner.h" />
     <ClInclude Include="dependencies\include\assimp\texture.h" />
     <ClInclude Include="dependencies\include\assimp\types.h" />
     <ClInclude Include="dependencies\include\assimp\vector2.h" />
@@ -202,19 +207,24 @@
     <ClInclude Include="dependencies\inlcude\GLFW\glfw3native.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="dependencies\include\assimp-vc140-mt.dll" />
+    <None Include="dependencies\include\assimp\.editorconfig" />
     <None Include="dependencies\include\assimp\color4.inl" />
+    <None Include="dependencies\include\assimp\config.h.in" />
     <None Include="dependencies\include\assimp\material.inl" />
     <None Include="dependencies\include\assimp\matrix3x3.inl" />
     <None Include="dependencies\include\assimp\matrix4x4.inl" />
     <None Include="dependencies\include\assimp\quaternion.inl" />
     <None Include="dependencies\include\assimp\vector2.inl" />
     <None Include="dependencies\include\assimp\vector3.inl" />
+    <None Include="dependencies\lib\assimp-vc140-mt.dll" />
     <None Include="dependencies\lib\glfw3.dll" />
     <None Include="Fragment.fr" />
     <None Include="imgui.ini" />
@@ -222,6 +232,7 @@
     <None Include="Vertex.v" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="dependencies\lib\assimp-vc140-mt.lib" />
     <Library Include="dependencies\lib\assimp.lib" />
     <Library Include="dependencies\lib\glfw3.lib" />
     <Library Include="dependencies\lib\glfw3dll.lib" />

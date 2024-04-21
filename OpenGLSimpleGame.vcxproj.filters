@@ -72,6 +72,9 @@
     <ClCompile Include="Material.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="ModelImporter.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\inlcude\GLFW\glfw3native.h">
@@ -239,6 +242,21 @@
     <ClInclude Include="dependencies\include\assimp\version.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="ModelImporter.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\DefaultIOStream.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\DefaultIOSystem.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\Defines.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\assimp\SceneCombiner.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dependencies\lib\glfw3.dll" />
@@ -267,12 +285,17 @@
     <None Include="dependencies\include\assimp\vector3.inl">
       <Filter>Archivos de encabezado</Filter>
     </None>
+    <None Include="dependencies\lib\assimp-vc140-mt.dll" />
+    <None Include="dependencies\include\assimp-vc140-mt.dll" />
+    <None Include="dependencies\include\assimp\.editorconfig" />
+    <None Include="dependencies\include\assimp\config.h.in" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
     <Library Include="dependencies\lib\glfw3_mt.lib" />
     <Library Include="dependencies\lib\glfw3dll.lib" />
     <Library Include="dependencies\lib\assimp.lib" />
+    <Library Include="dependencies\lib\assimp-vc140-mt.lib" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">

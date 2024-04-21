@@ -16,7 +16,7 @@ class Object
 {
 public:
 	Object();
-	Object(int id, Renderer* renderer);
+	Object(int id);
 	~Object();
 	void Draw(Camera* camera, glm::mat4 modelMat);
 	void AddChild(Object* child);
@@ -27,6 +27,7 @@ public:
 	int ID;
 	std::vector<Object*> children;
 	Renderer* renderer;
+	//Renderer* renderer;
 	int childrenNumber;
 private:
 	Transform transform;

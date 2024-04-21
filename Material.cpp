@@ -30,8 +30,8 @@ void Material::SetMaterialValues()
 	shader->Use();
 	shader->SetVec3("material.ambient", ambientValue.x, ambientValue.y, ambientValue.z);
 	shader->SetVec3("material.diffuse", diffuseValue.x, diffuseValue.y, diffuseValue.z);
-	shader->SetInt("material.diffuseMap", 0);
-	shader->SetInt("material.specular", 1); 
+	shader->SetInt("material.diffuseMap", diffuseMap);
+	shader->SetInt("material.specular", specularMap);
 	shader->SetFloat("material.shininess", shininessValue);
 	shader->SetBool("material.useDiffuseMap", usesDiffuseMap);
 	shader->SetBool("material.useSpecularMap", usesSpecularMap);

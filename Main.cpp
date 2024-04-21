@@ -10,7 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <Object.h>
-
+#include <ModelImporter.h>
 float lastX = 400, lastY = 300;   
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -18,7 +18,7 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 bool  firstMouse = false;
 float yaw = -90.0f;
 float pitch = 0.0f;
-glm::vec3 lightPos(0.0f, -2.0f, 1.5f);
+glm::vec3 lightPos(0.0f, 2.0f, 1.5f);
 bool rotate = false;
 
 float planeVertices[] = {
@@ -178,112 +178,115 @@ int main()
     lightShaderProgram.SetVec3("lights[0].direction", 0.0f, -1.0f, 0.0f);
     lightShaderProgram.SetFloat("lights[0].cutOff", glm::cos(glm::radians(18.5f)));
     lightShaderProgram.SetFloat("lights[0].outerCutOff", glm::cos(glm::radians(31.0f)));
-    lightShaderProgram.SetVec3("lights[0].type", 0.0f, 0.0f, 1.0f);
+    lightShaderProgram.SetVec3("lights[0].type", 0.0f, 1.0f, 0.0f);
 
+    ModelImporter modelImporter;
+    Object* importedModel = modelImporter.LoadModel("C:/Users/emont/Downloads/backpack/backpack.obj", &lightShaderProgram);
   
     //shaderProgram.Use();
 
-    //GENERATE MESHES
-    Mesh cubeMesh(cubeVertices,
-        sizeof(cubeVertices)/ sizeof(float),
-        cubeIndices,
-        sizeof(cubeIndices)/sizeof(unsigned int));
-   
-    Mesh planeMeshh(planeVertices,
-        sizeof(planeVertices) / sizeof(float),
-        planeIndices,
-        sizeof(planeIndices) / sizeof(unsigned int));
-    Mesh ligthSource(cubeVertices,
-        sizeof(cubeVertices) / sizeof(float),
-        cubeIndices,
-        sizeof(cubeIndices) / sizeof(unsigned int));
-
-    //
-
-    //GENERATE RENDERERS
-    Material material(texture,
-        false,
-        textureSpec,
-        false,
-        glm::vec3(0.5f, 0.5f, 0.5f),
-        glm::vec3(0.5f, 0.5f, 0.5f),
-        64.0f);
-    material.shader = &lightShaderProgram;
-
-    Renderer MeshRenderer(&planeMeshh, &material);
-    Renderer MeshRenderer2(&planeMeshh, &material);
-    Renderer LMeshRenderer(&cubeMesh, &material);
+   // //GENERATE MESHES
+   // Mesh cubeMesh(cubeVertices,
+   //     sizeof(cubeVertices)/ sizeof(float),
+   //     cubeIndices,
+   //     sizeof(cubeIndices)/sizeof(unsigned int));
+   //
+   // Mesh planeMeshh(planeVertices,
+   //     sizeof(planeVertices) / sizeof(float),
+   //     planeIndices,
+   //     sizeof(planeIndices) / sizeof(unsigned int));
+   // Mesh ligthSource(cubeVertices,
+   //     sizeof(cubeVertices) / sizeof(float),
+   //     cubeIndices,
+   //     sizeof(cubeIndices) / sizeof(unsigned int));
+   //
+   // //
+   //
+   // //GENERATE RENDERERS
+   // Material material(texture,
+   //     false,
+   //     textureSpec,
+   //     false,
+   //     glm::vec3(0.5f, 0.5f, 0.5f),
+   //     glm::vec3(0.5f, 0.5f, 0.5f),
+   //     64.0f);
+   // material.shader = &lightShaderProgram;
+   //
+   // Renderer MeshRenderer(&planeMeshh, &material);
+   // Renderer MeshRenderer2(&planeMeshh, &material);
+   // Renderer LMeshRenderer(&cubeMesh, &material);
     
     //
 
     //GENERATE ENTITIES
 
-    Object PlaneUP(0, &MeshRenderer);
-    PlaneUP.GetTransform()->Translate(glm::vec3(0.0f, 0.5f, 0.0f));
+   // Object PlaneUP(0, &MeshRenderer);
+   // PlaneUP.GetTransform()->Translate(glm::vec3(0.0f, 0.5f, 0.0f));
+   //
+   // Object PlaneDown(0, &MeshRenderer);
+   // PlaneDown.GetTransform()->Translate(glm::vec3(0.0f, -0.5f, 0.0f));
+   // PlaneDown.GetTransform()->Rotate(glm::radians(180.f), glm::vec3(1.0f, 0.0f, 0.0f));
+   // PlaneDown.GetTransform()->Rotate(glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f));
+   //
+   // Object PlaneForward(0, &MeshRenderer);
+   // PlaneForward.GetTransform()->Translate(glm::vec3(0.0f, 0.0f, 0.5f));
+   // PlaneForward.GetTransform()->Rotate(glm::radians(90.f), glm::vec3(1.0f, 0.0f, 0.0f));
+   //
+   // Object PlaneBack(0, &MeshRenderer);
+   // PlaneBack.GetTransform()->Translate(glm::vec3(0.0f, 0.0f, -0.5f));
+   // PlaneBack.GetTransform()->Rotate(glm::radians(-90.f), glm::vec3(1.0f, 0.0f, 0.0f));
+   //
+   // Object PlaneRight(0, &MeshRenderer);
+   // PlaneRight.GetTransform()->Translate(glm::vec3(0.5f, 0.0f, 0.0f));
+   // PlaneRight.GetTransform()->Rotate(glm::radians(-90.f), glm::vec3(0.0f, 0.0f, 1.0f));
+   //
+   // Object PlaneLeft(0, &MeshRenderer);
+   // PlaneLeft.GetTransform()->Translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+   // PlaneLeft.GetTransform()->Rotate(glm::radians(90.f), glm::vec3(0.0f, 0.0f, 1.0f));
+   // Object flatCube(0, nullptr);
+   // flatCube.AddChild(&PlaneUP);
+   // flatCube.AddChild(&PlaneDown);
+   // flatCube.AddChild(&PlaneForward);
+   // flatCube.AddChild(&PlaneBack);
+   // flatCube.AddChild(&PlaneLeft);
+   // flatCube.AddChild(&PlaneRight);
+   //
+   // Object flatCube2(0, nullptr);
+   // flatCube2.AddChild(&PlaneUP);
+   // flatCube2.AddChild(&PlaneDown);
+   // flatCube2.AddChild(&PlaneForward);
+   // flatCube2.AddChild(&PlaneBack);
+   // flatCube2.AddChild(&PlaneLeft);
+   // flatCube2.AddChild(&PlaneRight);
+   //
+   // Object flatCube3(0, nullptr);
+   // flatCube3.AddChild(&PlaneUP);
+   // flatCube3.AddChild(&PlaneDown);
+   // flatCube3.AddChild(&PlaneForward);
+   // flatCube3.AddChild(&PlaneBack);
+   // flatCube3.AddChild(&PlaneLeft);
+   // flatCube3.AddChild(&PlaneRight);
+   //
+   // Object cube(0, &MeshRenderer);
+   // Object cube2(0, &MeshRenderer);
+   // Object lightSourceObj(0, &MeshRenderer);
+   // Object lightSourcePlace(0, &LMeshRenderer);
+   //
+   // // GENERATE SCENE 
 
-    Object PlaneDown(0, &MeshRenderer);
-    PlaneDown.GetTransform()->Translate(glm::vec3(0.0f, -0.5f, 0.0f));
-    PlaneDown.GetTransform()->Rotate(glm::radians(180.f), glm::vec3(1.0f, 0.0f, 0.0f));
-    PlaneDown.GetTransform()->Rotate(glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    Object PlaneForward(0, &MeshRenderer);
-    PlaneForward.GetTransform()->Translate(glm::vec3(0.0f, 0.0f, 0.5f));
-    PlaneForward.GetTransform()->Rotate(glm::radians(90.f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-    Object PlaneBack(0, &MeshRenderer);
-    PlaneBack.GetTransform()->Translate(glm::vec3(0.0f, 0.0f, -0.5f));
-    PlaneBack.GetTransform()->Rotate(glm::radians(-90.f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-    Object PlaneRight(0, &MeshRenderer);
-    PlaneRight.GetTransform()->Translate(glm::vec3(0.5f, 0.0f, 0.0f));
-    PlaneRight.GetTransform()->Rotate(glm::radians(-90.f), glm::vec3(0.0f, 0.0f, 1.0f));
-
-    Object PlaneLeft(0, &MeshRenderer);
-    PlaneLeft.GetTransform()->Translate(glm::vec3(-0.5f, 0.0f, 0.0f));
-    PlaneLeft.GetTransform()->Rotate(glm::radians(90.f), glm::vec3(0.0f, 0.0f, 1.0f));
-    Object flatCube(0, nullptr);
-    flatCube.AddChild(&PlaneUP);
-    flatCube.AddChild(&PlaneDown);
-    flatCube.AddChild(&PlaneForward);
-    flatCube.AddChild(&PlaneBack);
-    flatCube.AddChild(&PlaneLeft);
-    flatCube.AddChild(&PlaneRight);
-
-    Object flatCube2(0, nullptr);
-    flatCube2.AddChild(&PlaneUP);
-    flatCube2.AddChild(&PlaneDown);
-    flatCube2.AddChild(&PlaneForward);
-    flatCube2.AddChild(&PlaneBack);
-    flatCube2.AddChild(&PlaneLeft);
-    flatCube2.AddChild(&PlaneRight);
-
-    Object flatCube3(0, nullptr);
-    flatCube3.AddChild(&PlaneUP);
-    flatCube3.AddChild(&PlaneDown);
-    flatCube3.AddChild(&PlaneForward);
-    flatCube3.AddChild(&PlaneBack);
-    flatCube3.AddChild(&PlaneLeft);
-    flatCube3.AddChild(&PlaneRight);
-
-    Object cube(0, &MeshRenderer);
-    Object cube2(0, &MeshRenderer);
-    Object lightSourceObj(0, &MeshRenderer);
-    Object lightSourcePlace(0, &LMeshRenderer);
-
-    // GENERATE SCENE 
-
-    Object scene(0, nullptr);
-    scene.AddChild(&flatCube);
-    scene.AddChild(&flatCube2);
-    scene.AddChild(&flatCube3);
-    scene.AddChild(&lightSourceObj);
-    
-
-    flatCube.GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-    flatCube2.GetTransform()->SetLocalPosition(glm::vec3(0.0f, -4.0f, 0.0f));
-    flatCube3.GetTransform()->SetLocalPosition(glm::vec3(0.0f, -8.0f, 0.0f));
-    flatCube.GetTransform()->Rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    //scene.AddChild(&cube2);
+    Object scene(0);
+    scene.AddChild(importedModel);
+    //scene.AddChild(&flatCube);
+    //scene.AddChild(&flatCube2);
+    //scene.AddChild(&flatCube3);
+    //scene.AddChild(&lightSourceObj);
+    //
+    //
+    //flatCube.GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+    //flatCube2.GetTransform()->SetLocalPosition(glm::vec3(0.0f, -4.0f, 0.0f));
+    //flatCube3.GetTransform()->SetLocalPosition(glm::vec3(0.0f, -8.0f, 0.0f));
+    //flatCube.GetTransform()->Rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    ////scene.AddChild(&cube2);
     
 
     //
@@ -309,10 +312,10 @@ int main()
         100.0f);
 
 
-    lightSourceObj.GetTransform()->SetLocalPosition(lightPos);
+    //lightSourceObj.GetTransform()->SetLocalPosition(lightPos);
     //lightSourceObj.GetTransform()->Scale(glm::vec3(0.1f, 0.1f, 0.1f));
 
-    cube.GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+    //cube.GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 0.0f));
     while (!glfwWindowShouldClose(window))
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -335,9 +338,10 @@ int main()
         }
         //lightPos = glm::vec3(glm::cos(time ) * 0.0f, 1.5f, glm::sin(time ) * 0.0f);
         lightShaderProgram.Use();
-        lightShaderProgram.SetVec3("lights[0].position", lightPos.x, lightPos.y, lightPos.z);
+        //lightShaderProgram.SetVec3("lights[0].position", lightPos.x, lightPos.y, lightPos.z);
         scene.Draw(&camera, glm::mat4(1.0f));
-        lightSourceObj.GetTransform()->SetLocalPosition(lightPos);
+        scene.GetTransform()->SetLocalPosition(lightPos);
+        //lightSourceObj.GetTransform()->SetLocalPosition(lightPos);
         //flatCube3.SetPosition(lightPos);
         //lightSourceObj.Draw(&camera, glm::mat4(1.0f));
         ImGui::Begin("Here is my first window");
